@@ -1,0 +1,8 @@
+# hiding MIL-STD-6090 schema
+/CoT/mil
+
+__pycache__
+env/
+build/
+*.egg-info/
+.pytest_cache/

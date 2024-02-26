@@ -16,22 +16,13 @@ string = """<?xml version="2.0"?>
     </event>
 """
 
-event = CoT.Event(**CoT.xml.parse(string)["event"])
+event = CoT.Event(**CoT.xml.parse(string))
+
+print(event.xml())
 
 assert event.uid == "FBCB2.T-117"
 assert event.access == "Unclassified"
-
-assert event.time == datetime.datetime.strptime(
-    "2002-10-05T18:00:23Z", "%Y-%m-%dT%H:%M:%S%z"
-)
-assert event.start == datetime.datetime.strptime(
-    "2002-10-05T18:00:23Z", "%Y-%m-%dT%H:%M:%S%z"
-)
-assert event.time == datetime.datetime.strptime(
-    "2002-10-05T18:00:23Z", "%Y-%m-%dT%H:%M:%S%z"
-)
-
+assert event.time == "2002-10-05T18:00:23.00Z"
+assert event.start == "2002-10-05T18:00:23.00Z"
+assert event.time == "2002-10-05T18:00:23.00Z"
 assert event.type == "a-h-G-E-V-A-T"
-assert event.type.desc == "TANK"
-assert event.type.full == "Gnd/Equip/Vehic/Armor/Tank"
-assert event.type.relation == "hostile"

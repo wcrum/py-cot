@@ -4,7 +4,7 @@ import xml.etree.ElementTree as ElementTree
 import CoT
 
 with open("../test/MITRE-message.xml", "r", encoding="utf-8") as file:
-    event = CoT.Event(**CoT.xml.parse(file.read())["event"])
+    event = CoT.Event(**CoT.xml.parse(file.read()))
 
 assert event.uid == "FBCB2.T-117"
 assert event.access == "Unclassified"

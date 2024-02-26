@@ -34,14 +34,9 @@ class Event(CustomModel):
     qos: Optional[str] = None
     access: Optional[str] = None
     detail: Optional[Detail] = None
-
-    def dict_xml(self):
-        return {
-            "event": json.loads(self.model_dump_json(by_alias=True, exclude_none=True))
-        }
+    point: Optional[Point] = None
 
     def xml(self):
-        return unparse(self.dict_xml()).replace(
-            '<?xml version="1.0" encoding="utf-8"?>',
-            '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>',
+        return unparse(
+            {"event": CustomModel.deep_prefix_add(self.model_dump(exclude_none=True))}
         )

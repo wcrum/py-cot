@@ -22,7 +22,7 @@ class CustomModel(BaseModel):
         self, original_serializer: Callable[[Self], dict[str, Any]]
     ) -> dict[str, Any]:
         for field_name, field_info in self.model_fields.items():
-            if field_info.annotation == datetime:
+            if isinstance(getattr(self, field_name), datetime):
                 setattr(
                     self,
                     field_name,
@@ -32,11 +32,10 @@ class CustomModel(BaseModel):
                     ),
                 )
 
-        result = original_serializer(self)
-
-        for field_name, field_info in self.model_fields.items():
-            if field_info.annotation == timedelta:
+            elif isinstance(getattr(self, field_name), timedelta):
                 result[field_name] = getattr(self, field_name).total_seconds()
+
+        result = original_serializer(self)
 
         return result
 

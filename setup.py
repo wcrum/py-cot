@@ -6,9 +6,12 @@ setup(
     description="Python Cursor On Target Object-Relational Mapper",
     author="William Crum",
     author_email="will@wcrum.dev",
-    packages=["CoT", "CoT.models", "CoT.xml", "CoT.models"],
+    packages=["CoT", "CoT.models", "CoT.xml"],
     install_requires=[
         "pydantic>=1.10.2",
         "xmltodict>=0.13.0",
     ],
+    extras_require={
+        "mitre": ["PyCoT-MITRE"],
+    },
 )

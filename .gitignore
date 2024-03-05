@@ -6,3 +6,9 @@ env/
 build/
 *.egg-info/
 .pytest_cache/
+
+lib
+bin
+activate
+
+pyvenv.cfg

@@ -39,4 +39,7 @@ class Event(CustomModel):
     def xml(self):
         return unparse(
             {"event": CustomModel.deep_prefix_add(self.model_dump(exclude_none=True))}
+        ).replace(
+            '<?xml version="1.0" encoding="utf-8"?>',
+            '<?xml version="1.0"?>',
         )

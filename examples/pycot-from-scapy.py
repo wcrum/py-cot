@@ -1,6 +1,5 @@
-from scapy.all import *
-
 import CoT
+from scapy.all import *
 
 # local address, remove line if external
 INTERFACE = "\\Device\\NPF_Loopback"

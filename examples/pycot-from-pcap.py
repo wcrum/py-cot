@@ -1,6 +1,5 @@
-from scapy.all import *
-
 import CoT
+from scapy.all import *
 
 packets = rdpcap("sample.pcap")
 packets.summary()

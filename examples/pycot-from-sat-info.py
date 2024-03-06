@@ -1,21 +1,29 @@
 import socket
 import time
-from datetime import UTC, datetime, timedelta, timezone
-
-from skyfield.api import load, utc, wgs84
+from datetime import datetime, timedelta, timezone
 
 import CoT
+from skyfield.api import Loader, load, wgs84
 
 now = datetime.now(timezone.utc)
 stale = now + timedelta(minutes=2)
 
-stations_url = "http://celestrak.com/NORAD/elements/gps-ops.txt"
+
+stations_url = "http://celestrak.com/NORAD/elements/gps-ops.txt"  # will locally download gps-ops.txt
 satellites = load.tle_file(stations_url)
+
+# LOAD OFFLINE FILE
+# satellites = load.tle_file('gps-ops.txt')
 
 TAK_IP = "localhost"
 TAK_PORT = 1234
 
+# UDP Connection
 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+
+# TCP Connection
+# sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+# sock.connect((TAK_IP, TAK_PORT))
 
 ts = load.timescale()
 
@@ -43,6 +51,12 @@ while True:
                 ),
                 detail={"contact": {"callsign": sat.name}},
             )
+            # UDP Connection
             sock.sendto(bytes(satCoT.xml(), encoding="utf-8"), ((TAK_IP, TAK_PORT)))
+            # TCP Connection
+            # sock.sendall(bytes(satCoT.xml(), encoding="utf-8"))
         except:
             print("Bad satellite TLE data.")
+
+    # Dont overload UDP / TCP Connections
+    time.sleep(1)

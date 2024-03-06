@@ -5,10 +5,6 @@ from datetime import datetime, timedelta, timezone
 import CoT
 from skyfield.api import Loader, load, wgs84
 
-now = datetime.now(timezone.utc)
-stale = now + timedelta(minutes=2)
-
-
 stations_url = "http://celestrak.com/NORAD/elements/gps-ops.txt"  # will locally download gps-ops.txt
 satellites = load.tle_file(stations_url)
 
@@ -28,6 +24,9 @@ sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 ts = load.timescale()
 
 while True:
+    now = datetime.now(timezone.utc)
+    stale = now + timedelta(minutes=2)
+
     t = ts.now()
     for sat in satellites:
         geocentric = sat.at(t)

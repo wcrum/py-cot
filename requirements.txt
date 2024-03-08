@@ -1,9 +1,10 @@
 annotated-types==0.6.0
-iniconfig==2.0.0
-packaging==23.2
-pluggy==1.4.0
-pydantic==2.6.2
+certifi==2024.2.2
+jplephem==2.21
+numpy==1.26.4
+pydantic==2.6.3
 pydantic_core==2.16.3
-pytest==8.0.1
-typing_extensions==4.9.0
+sgp4==2.23
+skyfield==1.48
+typing_extensions==4.10.0
 xmltodict==0.13.0

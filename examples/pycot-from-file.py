@@ -3,7 +3,7 @@ import xml.etree.ElementTree as ElementTree
 
 import CoT
 
-with open("../tests/messages/MITRE-Message.xml", "r", encoding="utf-8") as file:
+with open("./tests/messages/MITRE-Message.xml", "r", encoding="utf-8") as file:
     event = CoT.Event(**CoT.xml.parse(file.read()))
 
 assert event.uid == "FBCB2.T-117"
@@ -20,8 +20,6 @@ assert event.time == datetime.datetime.strptime(
 )
 
 assert event.type == "a-h-G-E-V-A-T"
-
-# todo: Init type description from XML
-# assert event.type.desc == "TANK"
-# assert event.type.full == "Gnd/Equip/Vehic/Armor/Tank"
-# assert event.type.relation == "hostile"
+assert event.type.description == "TANK"
+assert event.type.full == "Gnd/Equip/Vehic/Armor/Tank"
+assert event.type.reservation == "hostile"

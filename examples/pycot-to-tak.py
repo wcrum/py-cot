@@ -21,8 +21,8 @@ py_cot = CoT.Event(
     detail={"contact": {"callsign": "Debug.Python"}},
 )
 
-TAK_IP = "localhost"
-TAK_PORT = 8999
+TAK_IP = "x.x.x.x"
+TAK_PORT = 8089
 
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 sock.connect((TAK_IP, TAK_PORT))

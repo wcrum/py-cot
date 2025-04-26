@@ -1,12 +1,14 @@
 import datetime
-import json
+import re
 from datetime import datetime
-from typing import Optional
+from typing import Optional, Any
 
-from pydantic import ConfigDict, Field
+from pydantic import ConfigDict, Field, GetCoreSchemaHandler, computed_field
+from pydantic_core import CoreSchema, core_schema
 
 from CoT.utils import CustomModel
 from CoT.xml import unparse
+from CoT.types import CoTTypes, CoTReservations
 
 
 # MITRE Definition does not have addition subschema
@@ -22,9 +24,50 @@ class Point(CustomModel):
     le: float
 
 
+
+class Types(str):
+    value: str
+
+    @computed_field
+    @property
+    def description(self) -> str:
+        searchType = self.split("-")
+        searchType[1] = "."
+        searchType = "-".join(searchType)
+
+        if searchType not in CoTTypes:
+            return "Unknown"
+        
+        return CoTTypes[searchType].get("desc")
+
+    @computed_field
+    @property
+    def full(self) -> str:
+        searchType = self.split("-")
+        searchType[1] = "."
+        searchType = "-".join(searchType)
+
+        if searchType not in CoTTypes:
+            return "Unknown"
+        
+        return CoTTypes[searchType].get("full")
+    
+    @computed_field
+    @property
+    def reservation(self) -> str:
+        return CoTReservations[str(self).split("-")[1]]
+    
+    @classmethod
+    def __get_pydantic_core_schema__(
+        cls, source_type: Any, handler: GetCoreSchemaHandler
+    ) -> CoreSchema:
+        return core_schema.no_info_after_validator_function(cls, handler(str))
+    
+    
+
 class Event(CustomModel):
     version: float = 2.0
-    type: str = Field(pattern=r"\w+(-\w+)*(;[^;]*)?")
+    type: Types
     uid: str
     time: datetime
     start: datetime
@@ -43,3 +86,5 @@ class Event(CustomModel):
             '<?xml version="1.0" encoding="utf-8"?>',
             '<?xml version="1.0"?>',
         )
+    
+

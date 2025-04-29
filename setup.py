@@ -12,7 +12,7 @@ long_description = (this_directory / "README.md").read_text()
 
 setup(
     name="PyCoT",
-    version="3.0.0",
+    version="3.0.1",
     description="Python Cursor On Target Object-Relational Mapper",
     author="William Crum",
     author_email="will@wcrum.dev",

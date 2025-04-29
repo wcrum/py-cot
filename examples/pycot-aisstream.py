@@ -30,8 +30,8 @@ context = ssl._create_unverified_context()
 context.load_cert_chain(certfile='client_cert.pem', keyfile='client_key.pem')
 
 # Connect to server
-hostname = 'x.x.x.x'
-port = 8089
+hostname = '134.199.213.125'
+port = 9009
 
 def get_sar(mmsi: str) -> bool:
     """Get the AIS Search-And-Rescue (SAR) status of a given MMSI.
@@ -56,7 +56,7 @@ def get_sar(mmsi: str) -> bool:
 
 def create_cot_event(message: dict):
     now = datetime.datetime.now(datetime.timezone.utc)
-    stale = now + datetime.timedelta(minutes=2)
+    stale = now + datetime.timedelta(minutes=10)
 
     print(message['Message']['PositionReport'])
     print(message)
@@ -78,7 +78,7 @@ def create_cot_event(message: dict):
 async def connect_ais_stream():
     async with websockets.connect("wss://stream.aisstream.io/v0/stream") as websocket:
         subscribe_message = {
-            "APIKey": "",
+            "APIKey": "4a98e66f38997bf8dc62226380434734886e4efb",
             "BoundingBoxes": [[[-90, -180], [90, 180]]],
             "FilteringMMSI": ["368207620", "367719770", "211476060"],
             "FilderingMessageTypes": ["PositionReport"]
@@ -99,10 +99,12 @@ async def connect_ais_stream():
                     with context.wrap_socket(sock, server_hostname=hostname) as ssock:
                         ssock.sendall(b)
                         data = ssock.recv(1024)
+                        await asyncio.sleep(1)
 
 
-def main():
-    asyncio.run(asyncio.run(connect_ais_stream()))
-    
 if __name__ == "__main__":
-    main() 
+    while True:
+        try:
+            asyncio.run(asyncio.run(connect_ais_stream()))
+        except:
+            continue

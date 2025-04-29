@@ -11,3 +11,43 @@ PyCot is developed to assist and streamline integration with programs that utili
 ## Why?
 
 I needed an easy way to interface with CoT messages, I could not find one available.
+
+## Usage
+
+```shell
+pipx install PyCot
+```
+
+```python
+import CoT
+import datetime
+import socket
+
+now = datetime.datetime.now(datetime.timezone.utc)
+stale = now + datetime.timedelta(minutes=2)
+
+# Generate new Cursor on Target Event
+py_cot = CoT.Event(
+    version="2.0",
+    type="a-u-G-U-U-S-R-S",
+    access="Undefined",
+    uid="Debug.Python",
+    time=now,
+    start=now,
+    stale=stale,
+    how="h-g-i-g-o",
+    qos="2-i-c",
+    point=CoT.Point(lat=90, lon=90, hae=9999999, ce=9999999, le=9999999),
+    detail={"contact": {"callsign": "Debug.Python"}},
+)
+
+# Your TAK IPv4 / Port
+TAK_IP = "x.x.x.x"
+TAK_PORT = 9000
+
+# Sending UDP -> TAK Insecure Anonymous Port
+sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+sock.connect((TAK_IP, TAK_PORT))
+
+sock.sendall(bytes(py_cot.xml(), encoding="utf-8"))
+```

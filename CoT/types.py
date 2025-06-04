@@ -4034,3 +4034,35 @@ CoTTypes = {
     "desc": "Other",
   },
 }
+
+# https://github.com/FreeTAKTeam/FreeTakServer/blob/master/FreeTAKServer/model/RestMessages/RestEnumerations.py#L199-L230
+
+CoTHow = {
+  "m-i": "mensurated",
+  "h-t": "transcribed",
+  "m-": "machine",
+  "m-g": "gps",
+  "h-g-i-g-o": "gigo",
+  "a-f-G-E-V-9-1-1": "mayday",
+  "h-e": "estimated",
+  "h-c": "calculated",
+  "h-p": "pasted",
+  "m-m": "magnetic",
+  "m-n": "ins",
+  "m-s": "simulated",
+  "m-c": "configured",
+  "m-r": "radio",
+  "m-p": "propagated",
+  "m-f": "fused",
+  "m-a": "tracker",
+  "m-g-n": "ins+gps",
+  "m-g-d": "dgps",
+  "m-r-e": "eplrs",
+  "m-r-p": "plrs",
+  "m-r-d": "doppler",
+  "m-r-v": "vhf",
+  "m-r-t": "tadil",
+  "m-r-t-a": "tadila",
+  "m-r-t-b": "tadilb",
+  "m-r-t-j": "tadilj"
+}

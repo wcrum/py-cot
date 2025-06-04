@@ -12,10 +12,7 @@ from pydantic import BaseModel, model_serializer
 
 
 class CustomModel(BaseModel):
-    #   -W ignore::pydantic.warnings.PydanticDeprecatedSince20
-    model_config = ConfigDict(
-        populate_by_name=True,
-    )
+    model_config = ConfigDict(populate_by_name=True)
 
     @model_serializer(mode="wrap")
     def serialize(
@@ -43,15 +40,17 @@ class CustomModel(BaseModel):
     def deep_prefix_add(self, obj, prefix="@"):
         second_dict = obj.copy()
 
+
         for key, value in obj.items():
             if isinstance(value, dict):
                 second_dict[key] = CustomModel.deep_prefix_add(value)
                 continue
 
             if key == "text":
-                second_dict["#{key}"] = value
+                second_dict[f'#{key}'] = value
             else:
                 second_dict[f"{prefix}{key}"] = value
 
             del second_dict[key]
+        print(second_dict)
         return second_dict

@@ -3,18 +3,21 @@ import re
 from datetime import datetime
 from typing import Optional, Any
 
-from pydantic import ConfigDict, Field, GetCoreSchemaHandler, computed_field
+from pydantic import ConfigDict, Field, GetCoreSchemaHandler, computed_field, constr
 from pydantic_core import CoreSchema, core_schema
-
 from CoT.utils import CustomModel
 from CoT.xml import unparse
-from CoT.types import CoTTypes, CoTReservations
+from CoT.types import CoTTypes, CoTReservations, CoTHow
+from pydantic import BaseModel
+KeywordsPattern = constr(pattern=r"^[\w\- ]+(,[\w\- ]+)*$")
 
-
+class Remarks(BaseModel):
+    text: str
+    
 # MITRE Definition does not have addition subschema
 class Detail(CustomModel):
-    model_config = ConfigDict(extra="allow")
-
+    model_config = ConfigDict(extras=True, populate_by_name=True)
+    remarks: Remarks = Optional[Remarks]
 
 class Point(CustomModel):
     lat: float = Field(ge=-90, le=90)
@@ -63,7 +66,17 @@ class Types(str):
     ) -> CoreSchema:
         return core_schema.no_info_after_validator_function(cls, handler(str))
     
-    
+
+class How(str):
+    value: str
+
+    @computed_field
+    @property
+    def description(self) -> str:
+        if self.value not in CoTHow:
+            return "Unknown"
+        
+        return CoTHow[self.value]
 
 class Event(CustomModel):
     version: float = 2.0
@@ -72,7 +85,7 @@ class Event(CustomModel):
     time: datetime
     start: datetime
     stale: datetime
-    how: str = Field(pattern=r"\w-\w")
+    how: How = Field(pattern=r"\w-\w")
     opex: Optional[str] = None
     qos: Optional[str] = None
     access: Optional[str] = None

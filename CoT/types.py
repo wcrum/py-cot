@@ -4036,33 +4036,45 @@ CoTTypes = {
 }
 
 # https://github.com/FreeTAKTeam/FreeTakServer/blob/master/FreeTAKServer/model/RestMessages/RestEnumerations.py#L199-L230
+# https://github.com/deptofdefense/AndroidTacticalAssaultKit-CIV/blob/889eee292c43d3d2eafdd1f2fbf378ad5cd89ecc/takcot/mitre/types.txt
 
 CoTHow = {
-  "m-i": "mensurated",
-  "h-t": "transcribed",
-  "m-": "machine",
-  "m-g": "gps",
-  "h-g-i-g-o": "gigo",
-  "a-f-G-E-V-9-1-1": "mayday",
-  "h-e": "estimated",
-  "h-c": "calculated",
-  "h-p": "pasted",
-  "m-m": "magnetic",
-  "m-n": "ins",
-  "m-s": "simulated",
-  "m-c": "configured",
-  "m-r": "radio",
-  "m-p": "propagated",
-  "m-f": "fused",
-  "m-a": "tracker",
-  "m-g-n": "ins+gps",
-  "m-g-d": "dgps",
-  "m-r-e": "eplrs",
-  "m-r-p": "plrs",
-  "m-r-d": "doppler",
-  "m-r-v": "vhf",
-  "m-r-t": "tadil",
-  "m-r-t-a": "tadila",
-  "m-r-t-b": "tadilb",
-  "m-r-t-j": "tadilj"
+  # Human entered or modified coordinates
+  "h": "human",          # human entered or modified (someone typed the coordinates)
+  "h-e": "estimated",     # estimated (a SWAG by the user)
+  "h-c": "calculated",    # calculated (user probably calculated value by hand)
+  "h-t": "transcribed",   # transcribed (from voice, paper, ...)
+  "h-p": "pasted",        # cut and paste from another window
+  "h-g-i-g-o": "gigo",    # a highly suspect track... e.g., TACP-M ;-)
+  
+  # Machine generated coordinates
+  "m": "machine",        # machine generated
+  "m-a": "algorithmic",   # prediction from an algorithmic tracker
+  "m-c": "configured",    # out of a configuration file
+  "m-f": "fused",         # corroborated from multiple sources
+  "m-g": "gps",           # derived from GPS receiver
+  "m-g-n": "ins+gps",     # augmented INS+GPS
+  "m-g-d": "dgps",        # differential GPS
+  "m-i": "mensurated",    # mensurated (from imagery)
+  "m-l": "laser",         # laser designated
+  "m-m": "magnetic",      # derived from magnetic sources
+  "m-n": "ins",           # derived from inertial navigation system
+  "m-p": "passed",        # imported from another system (gateway) w/o pedigree
+  "m-r": "radio",         # radio positioning system (non GPS)
+  "m-r-d": "doppler",     # doppler radar
+  "m-r-e": "eplrs",       # enhanced position location reporting system
+  "m-r-p": "plrs",        # position location reporting system
+  "m-r-t": "tadil",       # tactical digital information link
+  "m-r-t-a": "tadila",    # tadil a
+  "m-r-t-b": "tadilb",    # tadil b
+  "m-r-t-j": "tadilj",    # tadil j
+  "m-r-v": "vhf",         # VHF radio
+  "m-s": "simulated",     # out of a simulation
+  "m-v": "computed",      # computed using geometric means
+  "m-v-o": "optical",     # computed using optical means
+  "m-v-u": "acoustic",    # computed using acoustic means
+  "m-v-ou": "flash",      # computed using combined acoustic and optical flash
+
+  # Special case
+  "a-f-G-E-V-9-1-1": "mayday" # emergency signal
 }

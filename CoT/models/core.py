@@ -85,7 +85,7 @@ class Event(CustomModel):
     time: datetime
     start: datetime
     stale: datetime
-    how: How = Field(pattern=r"\w-\w")
+    how: How = Field(pattern=r"\w(-\w)+")
     opex: Optional[str] = None
     qos: Optional[str] = None
     access: Optional[str] = None
